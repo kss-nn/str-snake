@@ -53,33 +53,43 @@ interface IPiece {
  * Pótold a hiányzó tulajdonságokat és metódusokat az interfész alapján.
  */
 export default class Piece implements IPiece {
+  next: Piece | null;
+  prev: Piece | null;
+  x: number;
+  y: number;
+  el: HTMLDivElement;
+  direction: string;
+  type: string;
+  garden: HTMLDivElement;  
   
-  
-  
-  constructor({
-    x,
-    y,
-    type = 'body',
-    direction = 'RIGHT',
-    next = null,
-    prev = null,
-  }: IPieceParams) {
-    this.direction = direction;
-    this.type = type;
-    this.x = x;
-    this.y = y;
-    this.el = document.createElement('div');
-    this.next = next;
-    this.prev = prev;
-    // Enable for a neat effect
-    // this.el.innerHTML = "&#10096;";
-    this.setType(type);
-    this.setPos(this.x, this.y);
-    this.garden = (document.getElementById('garden') as HTMLDivElement);
-    // this.applyClass();
-    this.garden.appendChild(this.el);
-  }
+    constructor({
+      x,
+      y,
+      type = 'body',
+      direction = 'RIGHT',
+      next = null,
+      prev = null,
 
+    }: IPieceParams) {
+      this.direction = direction;
+      this.type = type;
+      this.x = x;
+      this.y = y;
+      this.el = document.createElement('div');
+      this.next = next;
+      this.prev = prev;
+      // Enable for a neat effect
+      // this.el.innerHTML = "&#10096;";
+      this.setType(type);
+      this.setPos(this.x, this.y);
+      this.garden = (document.getElementById('garden') as HTMLDivElement);
+      //this.applyClass();
+      this.garden.appendChild(this.el);
+    }
+    
+   
+
+ 
   bend(headDirection: string) {
     if (this.direction !== headDirection) {
       this.el.className = '';
@@ -101,16 +111,45 @@ export default class Piece implements IPiece {
     // this.el.style.transform = `translate(${x}px, ${y}px)`;
 
     // reset CSS classnames basically
-    this.applyClass();
-
-    // Save the location of this piece to occupied spaces
-    // But don't do this, if we are the food or head because;
-    // - Head cannot collide with itself
-    // - We want to collide with food :)
-    if (this.type !== 'head' && this.type !== 'food' && this.type !== 'golden') {
-      Locations.set(x, y);
-    }
+    /**
+   /**
+   * Osztályokat állít be a this.el HTML elemre.
+   * 1. A this.el.className -et üres string -re állítja.
+   * 2. A this.el.classList.add metódussal hozzáad három új osztályt:
+   * 'cell', this.type, this.direction
+   */
+   
+    /**
+   * Megállapítja, hogy ütközött-e a kígyó darabja valamivel.
+   * @param node {Piece}
+   * @returns {boolean}
+   * Ha a node null, akkor false értékkel tér vissza, 
+   * Ha nem, akkor akkor tér vissza true -val, ha a this.x egyenlő a node.x -el 
+   * és a this.y egyenlő a node.y -al.
+   */
+  
+  // Save the location of this piece to occupied spaces
+  // But don't do this, if we are the food or head because;
+  // - Head cannot collide with itself
+  // - We want to collide with food :)
+  if (this.type !== 'head' && this.type !== 'food' && this.type !== 'golden') {
+    Locations.set(x, y);
   }
+}
+setType(type: string): void{
+  this.type=type;
+  this.applyClass();
+}
+
+isCollidingWith(node: Piece | null): boolean{
+  return node===null? false : true;
+
+}
+applyClass(): void{
+  this.el.className="";
+  this.el.classList.add(`cell ${this.type} ${this.direction}`)
+}
+
 
   move(x: number, y: number, direction: string = 'RIGHT'): void {
     let X = x;
