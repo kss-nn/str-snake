@@ -92,7 +92,7 @@ export default class Level {
      * @var {LevelMap} level - this.generatorFunction által visszaadott érték, 
      * a rows és cols paraméterekkel
      */
-    let level: LevelMap = this.generatorFunction(cols, rows);
+    let level: LevelMap = this.generatorFunction(rows, cols);
     
 
     level.forEach(line => {
