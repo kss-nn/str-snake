@@ -16,7 +16,7 @@ import BaseGame from './BaseGame';
  * osztályban a hiányzó metódusokat. Úgy találod meg őket, hogy abstract 
  * metódusként vannak definiálva.
  */
-export default class Game extends BaseGame implements IBaseGame {
+export default class Game extends BaseGame {
   head: Piece;
   tail: Piece;
   food: Piece | null;
