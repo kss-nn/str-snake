@@ -16,7 +16,35 @@ export default abstract class BaseGame implements IBaseGame {
 
     protected noClip: boolean = false;
 
+    //Kell?
+    head: Piece;
+
+    tail: Piece;
+
+    /** @default null */
+    food: Piece | null;
+
+    /** @default null */
+    goldenApple: Piece | null;
+
+    /** @default 0 */
+    length: number;
+
+    /** @default 0 */
+    growth: number;
+
+    /** @default 0 */
+    score: number;
+
+    /** @default null */
+    currentLevel: Level | null;
+
+    garden: HTMLDivElement;
+
+    //KELL?
     /**
+     * 
+     * 
      * @returns {number}
      * Egy random számot szorozz meg a this.level.length -el, 
      * majd kerekítsd lefelé, ez lesz az index.
@@ -42,5 +70,5 @@ export default abstract class BaseGame implements IBaseGame {
      * metódust, hogy eltávolítsd őket az oldalról
      * 4. a this.gridVisible értékét állítsd false -ra
      */
-    abstract removeGrid (): void;
+    abstract removeGrid(): void;
 }
