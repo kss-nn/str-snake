@@ -110,14 +110,7 @@ export default class Piece implements IPiece {
 
     // this.el.style.transform = `translate(${x}px, ${y}px)`;
 
-    // reset CSS classnames basically
-    /**
-   /**
-   * Osztályokat állít be a this.el HTML elemre.
-   * 1. A this.el.className -et üres string -re állítja.
-   * 2. A this.el.classList.add metódussal hozzáad három új osztályt:
-   * 'cell', this.type, this.direction
-   */
+   
    
     /**
    * Megállapítja, hogy ütközött-e a kígyó darabja valamivel.
@@ -136,22 +129,39 @@ export default class Piece implements IPiece {
     Locations.set(x, y);
   }
 }
-setType(type: string): void{
+setType(type: string){
   this.type=type;
   this.applyClass();
 }
 
 isCollidingWith(node: Piece | null): boolean{
-  return node===null? false : true;
-
+  // return node===null? false :
+  // (this.x=node.x && this.y=node.y)? true: '';
+  if(node===null){
+    return false;
+  }else if(this.x===node.x && this.y===node.y){
+    return true;
+  }
 }
-applyClass(): void{
+
+ // reset CSS classnames basically
+    /**
+   /**
+   * Osztályokat állít be a this.el HTML elemre.
+   * 1. A this.el.className -et üres string -re állítja.
+   * 2. A this.el.classList.add metódussal hozzáad három új osztályt:
+   * 'cell', this.type, this.direction
+   */
+
+applyClass(){
   this.el.className="";
-  this.el.classList.add(`cell ${this.type} ${this.direction}`)
+  this.el.classList.add(`cell`);
+  this.el.classList.add(this.type);
+  this.el.classList.add(this.direction);
 }
 
 
-  move(x: number, y: number, direction: string = 'RIGHT'): void {
+  move(x: number, y: number, direction: string = 'RIGHT') {
     let X = x;
     let Y = y;
 
