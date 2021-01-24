@@ -26,9 +26,7 @@ export default class Level {
    */
 
   translate(x: number, y: number): coord {
-    let xr: number = Math.floor(x) * SIZE;
-    let yr: number = Math.floor(y) * SIZE;
-    return [xr, yr];
+    return [Math.floor(x) * SIZE, Math.floor(y) * SIZE];
   }
 
   remove (): void {
